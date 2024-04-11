@@ -5,7 +5,14 @@ class DeviseCreateCompanies < ActiveRecord::Migration[6.1]
     create_table :companies do |t|
       ## Database authenticatable
       t.string :email,              null: false, default: ""
-      t.string :encrypted_password, null: false, default: ""
+
+      ## Additional fields for company registration
+      t.string :company_name,          null: false, default: "" # 店舗名
+      t.string :representative_name,   null: false, default: "" # 代表者の氏名
+      #t.string :representative_email,  null: false, default: "" # 代表者のメールアドレス
+      t.string :phone_number,          null: false, default: "" # 電話番号
+      t.string :address,               null: false, default: "" # 店舗の住所
+      t.string :encrypted_password,    null: false, default: ""
 
       ## Recoverable
       t.string   :reset_password_token
@@ -32,7 +39,6 @@ class DeviseCreateCompanies < ActiveRecord::Migration[6.1]
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
 
-      t.string :name
       t.timestamps null: false
     end
 

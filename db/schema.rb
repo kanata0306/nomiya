@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_03_151407) do
+ActiveRecord::Schema.define(version: 2024_04_10_143245) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -48,8 +48,22 @@ ActiveRecord::Schema.define(version: 2024_04_03_151407) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "business_hours", force: :cascade do |t|
+    t.string "day"
+    t.string "open_time"
+    t.string "close_time"
+    t.integer "post_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_business_hours_on_post_id"
+  end
+
   create_table "companies", force: :cascade do |t|
     t.string "email", default: "", null: false
+    t.string "company_name", default: "", null: false
+    t.string "representative_name", default: "", null: false
+    t.string "phone_number", default: "", null: false
+    t.string "address", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -58,6 +72,32 @@ ActiveRecord::Schema.define(version: 2024_04_03_151407) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_companies_on_email", unique: true
     t.index ["reset_password_token"], name: "index_companies_on_reset_password_token", unique: true
+  end
+
+  create_table "drink_categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "drinks", force: :cascade do |t|
+    t.integer "post_id", null: false
+    t.string "name"
+    t.decimal "price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_drinks_on_post_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string "store_name"
+    t.text "store_description"
+    t.string "business_hours"
+    t.text "drink_menu"
+    t.text "popular_courses_and_prices"
+    t.string "store_image"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -76,4 +116,6 @@ ActiveRecord::Schema.define(version: 2024_04_03_151407) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "business_hours", "posts"
+  add_foreign_key "drinks", "posts"
 end

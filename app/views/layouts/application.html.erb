@@ -11,23 +11,15 @@
   </head>
 
   <body>
-     <header>
-    <% if user_signed_in? %>
-      <li>
+    <header>
+      <% if user_signed_in? %>
         <%= button_to "ログアウト", destroy_user_session_path, method: :delete %>
-      </li>
-      <li>
         <%= button_to "アカウント削除", user_registration_path, method: :delete, data: { confirm: "本当にアカウントを削除しますか？" } %>
-      </li>
-    <% else %>
-      <li>
+      <% else %>
         <%= link_to "新規登録", new_user_registration_path %>
-      </li>
-      <li>
         <%= link_to "ログイン", new_user_session_path %>
-      </li>
-    <% end %>
-  </header>
+      <% end %>
+    </header>
     <%= yield %>
   </body>
 </html>
