@@ -1,9 +1,4 @@
-
 <h2>新規投稿</h2>
-
-
-
-
 
 <%= form_with(model: @post, url: companies_posts_path, local: true) do |f| %>
   <div class="field">
@@ -26,7 +21,7 @@
     <% end %>
   </div>
 
-   <div class="field">
+  <div class="field">
     <%= f.label :drink_menu, "ドリンク一覧" %>
     <%= f.fields_for :drinks do |drink_form| %>
       <%= drink_form.select :drink_category, DrinkCategory.all.map { |category| [category.name, category.id] }, include_blank: true, prompt: "ドリンクの種類" %>

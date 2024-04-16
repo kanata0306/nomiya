@@ -1,11 +1,11 @@
 <h2>企業ログイン</h2>
 
-<%= form_with url: company_session_path, method: :post do |f| %>
+<%= form_with model: @company, url: company_session_path, method: :post do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
   
   <div class="field">
     <%= f.label :email, "メールアドレス" %><br>
-    <%= f.text_field :email, required: true %>
+    <%= f.email_field :email, required: true %>
   </div>
 
   <div class="field">

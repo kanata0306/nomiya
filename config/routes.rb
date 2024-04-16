@@ -1,12 +1,24 @@
 Rails.application.routes.draw do
   
-  # Rails generator for Devise controllers for companies
+  devise_for :admins, controllers: {
+    sessions: "admins/sessions",
+    registrations: "admins/registrations"
+  }
+
   devise_for :companies, controllers: {
     sessions: "companies/sessions",
     registrations: "companies/registrations"
   }
   
-  devise_for :users
+  devise_for :users, controllers: {
+    sessions: "users/sessions",
+    registrations: "users/registrations"
+  }
+  
+  namespace :admins do
+   resources :drink_categories
+  end
+
   
   namespace :companies do
     resources :posts
@@ -17,4 +29,5 @@ Rails.application.routes.draw do
   get 'homes/top'
 
   root to: "homes#top"
+
 end

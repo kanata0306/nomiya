@@ -1,4 +1,4 @@
-<!-- app/views/companies/posts/_drink_fields.html.erb -->
+
 <div class="nested-fields">
   <%= fields_for :drinks, Drink.new do |nested_form| %>
     <%= nested_form.select :drink_category, DrinkCategory.all.map { |category| [category.name, category.id] }, include_blank: true, prompt: "ドリンクの種類" %>

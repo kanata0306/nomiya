@@ -1,0 +1,21 @@
+<h2>投稿一覧</h2>
+
+<h2><%= @post.store_name %></h2>
+<p><%= @post.store_description %></p>
+<p>営業時間：</p>
+<ul>
+  <% @post.business_hours.each do |day, hours| %>
+    <li><strong><%= day %>曜日：</strong> <%= hours %></li>
+  <% end %>
+</ul>
+<p>ドリンク一覧：</p>
+<ul>
+  <% @post.drinks.each do |drink| %>
+    <li><strong>カテゴリ：</strong> <%= drink.drink_category.name %></li>
+    <li><strong>ドリンク名：</strong> <%= drink.name %></li>
+    <li><strong>価格：</strong> <%= drink.price %>円</li>
+  <% end %>
+</ul>
+<p>人気コースと料金：</p>
+<p><%= @post.popular_courses_and_prices %></p>
+<%= link_to '一覧に戻る', companies_posts_path %>
