@@ -1,0 +1,48 @@
+<%= form_with(model: @post, url: companies_posts_path, local: true) do |f| %>
+  <div class="field">
+    <%= f.label :store_name, "店舗名" %>
+    <%= f.text_field :store_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :store_description, "店舗紹介" %>
+    <%= f.text_area :store_description %>
+  </div>
+
+  <div class="field">
+  <%= f.label :business_hours, "営業時間" %>
+  <% ['月', '火', '水', '木', '金', '土', '日'].each do |day| %>
+    <div class="field">
+      <%= f.label "business_hours_attributes[#{day}_start_time]", "#{day}曜日 開始時間" %>
+      <%= f.time_field :"business_hours_attributes[#{day}_start_time]" %>
+      <%= f.label "business_hours_attributes[#{day}_end_time]", "#{day}曜日 終了時間" %>
+      <%= f.time_field :"business_hours_attributes[#{day}_end_time]" %>
+      <%= f.label "business_hours_closed_#{day}", " 定休日" %>
+      <%= f.check_box :"business_hours_closed_#{day}" %>
+    </div>
+  <% end %>
+</div>
+
+  <%= f.label :drink_menu, "ドリンク一覧" %>
+  <div class="field">
+    <%= f.fields_for :drinks do |drink| %>
+      <%= render 'drink_fields', f: drink %>
+    <% end %>
+    <%= link_to_add_association '追加', f, :drinks %>
+  </div>
+  
+
+  <div class="field">
+    <%= f.label :popular_courses_and_prices, "人気コースと料金" %>
+    <%= f.text_area :popular_courses_and_prices %>
+  </div>
+
+  <div class="field">
+    <%= f.label :store_image, "店舗画像" %>
+    <%= f.file_field :store_image, accept: "image/*" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "投稿する" %>
+  </div>
+<% end %>

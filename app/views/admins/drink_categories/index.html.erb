@@ -12,8 +12,8 @@
     <% @drink_categories.each do |drink_category| %>
       <tr>
         <td><%= drink_category.name %></td>
-        <td><%= button_to "編集", edit_admins_drink_category_path(drink_category) %></td>
-        <td><%= button_to "削除", admins_drink_category_path(drink_category), method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
+        <td><%= link_to "編集", edit_admins_drink_category_path(drink_category) %></td>
+        <td><%= link_to "削除", admins_drink_category_path(drink_category), method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
       </tr>
     <% end %>
   </tbody>

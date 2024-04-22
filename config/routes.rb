@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     resources :posts
   end
 
-  resources :bars, only: [:show, :index, :edit]
+  
 
   get 'homes/top'
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_14_075737) do
+ActiveRecord::Schema.define(version: 2024_04_21_103209) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -61,12 +61,14 @@ ActiveRecord::Schema.define(version: 2024_04_14_075737) do
   end
 
   create_table "business_hours", force: :cascade do |t|
-    t.string "day"
-    t.string "open_time"
-    t.string "close_time"
+    t.time "open_time"
+    t.time "close_time"
+    t.string "day_of_week"
     t.integer "post_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "weekday"
+    t.boolean "closed"
     t.index ["post_id"], name: "index_business_hours_on_post_id"
   end
 
@@ -74,6 +76,7 @@ ActiveRecord::Schema.define(version: 2024_04_14_075737) do
     t.string "email", default: "", null: false
     t.string "company_name", default: "", null: false
     t.string "representative_name", default: "", null: false
+    t.string "representative_email", default: "", null: false
     t.string "phone_number", default: "", null: false
     t.string "address", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -94,14 +97,17 @@ ActiveRecord::Schema.define(version: 2024_04_14_075737) do
 
   create_table "drinks", force: :cascade do |t|
     t.integer "post_id", null: false
+    t.integer "drink_category_id", null: false
     t.string "name"
     t.decimal "price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["drink_category_id"], name: "index_drinks_on_drink_category_id"
     t.index ["post_id"], name: "index_drinks_on_post_id"
   end
 
   create_table "posts", force: :cascade do |t|
+    t.integer "company_id"
     t.string "store_name"
     t.text "store_description"
     t.string "business_hours"
@@ -110,6 +116,7 @@ ActiveRecord::Schema.define(version: 2024_04_14_075737) do
     t.string "store_image"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["company_id"], name: "index_posts_on_company_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -121,7 +128,6 @@ ActiveRecord::Schema.define(version: 2024_04_14_075737) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "role"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -130,4 +136,5 @@ ActiveRecord::Schema.define(version: 2024_04_14_075737) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "business_hours", "posts"
   add_foreign_key "drinks", "posts"
+  add_foreign_key "posts", "companies"
 end

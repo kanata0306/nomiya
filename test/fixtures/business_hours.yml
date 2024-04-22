@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  open_time: 2024-04-21 06:45:26
+  close_time: 2024-04-21 06:45:26
+  day_of_week: MyString
+  post: one
+
+two:
+  open_time: 2024-04-21 06:45:26
+  close_time: 2024-04-21 06:45:26
+  day_of_week: MyString
+  post: two

@@ -2,8 +2,8 @@
 
 <%= form_with(model: @drink_category, url: admins_drink_categories_path) do |f| %>
 <div class="field">
-  <%= f.label :drink_category, "カテゴリー" %>
-    <%= f.text_field :drink_category %>
+  <%= f.label :name, "カテゴリー名" %>
+    <%= f.text_field :name %>
 </div>
 
 <%= f.submit "送信" %>

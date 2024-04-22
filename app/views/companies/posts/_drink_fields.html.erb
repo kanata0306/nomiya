@@ -1,9 +1,6 @@
-
 <div class="nested-fields">
-  <%= fields_for :drinks, Drink.new do |nested_form| %>
-    <%= nested_form.select :drink_category, DrinkCategory.all.map { |category| [category.name, category.id] }, include_blank: true, prompt: "ドリンクの種類" %>
-    <%= nested_form.text_field :name, placeholder: "ドリンク名" %>
-    <%= nested_form.text_field :price, placeholder: "価格" %>
-    <%= link_to_remove_association "削除", nested_form %>
-  <% end %>
+    <%= f.select :drink_category_id, DrinkCategory.all.map { |category| [category.name, category.id] }, include_blank: true, prompt: "ドリンクの種類" %>
+    <%= f.text_field :name, placeholder: "ドリンク名" %>
+    <%= f.text_field :price, placeholder: "価格" %>
+    <%= link_to_remove_association "削除", f %>
 </div>
