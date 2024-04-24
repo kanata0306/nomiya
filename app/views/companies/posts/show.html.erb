@@ -3,9 +3,13 @@
 <p><%= @post.store_description %></p>
 <p>営業時間：</p>
 <ul>
-  <% @post.business_hours.each do |day, hours| %>
-    <li><strong><%= day %>曜日：</strong> <%= hours %></li>
-  <% end %>
+  <li>月: <%=  @post.business_hour.m_closing || (@post.business_hour.m_start_time.blank? || @post.business_hour.m_end_time.blank?) ? "定休日" : "#{@post.business_hour.m_start_time.strftime('%H:%M')} ～ #{@post.business_hour.m_end_time.strftime('%H:%M')}" %></li>
+  <li>火: <%=  @post.business_hour.t_closing || (@post.business_hour.t_start_time.blank? || @post.business_hour.t_end_time.blank?) ? "定休日" : "#{@post.business_hour.t_start_time.strftime('%H:%M')} ～ #{@post.business_hour.t_end_time.strftime('%H:%M')}" %></li>
+  <li>水: <%=  @post.business_hour.w_closing || (@post.business_hour.w_start_time.blank? || @post.business_hour.w_end_time.blank?) ? "定休日" : "#{@post.business_hour.w_start_time.strftime('%H:%M')} ～ #{@post.business_hour.w_end_time.strftime('%H:%M')}" %></li>
+  <li>木: <%=  @post.business_hour.h_closing || (@post.business_hour.h_start_time.blank? || @post.business_hour.h_end_time.blank?) ? "定休日" : "#{@post.business_hour.h_start_time.strftime('%H:%M')} ～ #{@post.business_hour.h_end_time.strftime('%H:%M')}" %></li>
+  <li>金: <%=  @post.business_hour.f_closing || (@post.business_hour.f_start_time.blank? || @post.business_hour.f_end_time.blank?) ? "定休日" : "#{@post.business_hour.f_start_time.strftime('%H:%M')} ～ #{@post.business_hour.f_end_time.strftime('%H:%M')}" %></li>
+  <li>土: <%=  @post.business_hour.s_closing || (@post.business_hour.s_start_time.blank? || @post.business_hour.s_end_time.blank?) ? "定休日" : "#{@post.business_hour.s_start_time.strftime('%H:%M')} ～ #{@post.business_hour.s_end_time.strftime('%H:%M')}" %></li>
+  <li>日: <%=  @post.business_hour.u_closing || (@post.business_hour.u_start_time.blank? || @post.business_hour.u_end_time.blank?) ? "定休日" : "#{@post.business_hour.u_start_time.strftime('%H:%M')} ～ #{@post.business_hour.u_end_time.strftime('%H:%M')}" %></li>
 </ul>
 
 <p>ドリンク一覧：</p>
@@ -15,7 +19,7 @@
   <ul>
     <% drinks.each do |drink| %>
       <li>
-        <strong>ドリンク名：</strong> <%= drink.name %>, 
+        <strong>ドリンク名：</strong> <%= drink.name %>,
         <strong>価格：</strong> <%= drink.price %>円
       </li>
     <% end %>

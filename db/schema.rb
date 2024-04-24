@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_21_103209) do
+ActiveRecord::Schema.define(version: 2024_04_21_064526) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -61,14 +61,32 @@ ActiveRecord::Schema.define(version: 2024_04_21_103209) do
   end
 
   create_table "business_hours", force: :cascade do |t|
+    t.integer "post_id", null: false
     t.time "open_time"
     t.time "close_time"
-    t.string "day_of_week"
-    t.integer "post_id", null: false
+    t.time "m_start_time"
+    t.time "m_end_time"
+    t.boolean "m_closing"
+    t.time "t_start_time"
+    t.time "t_end_time"
+    t.boolean "t_closing"
+    t.time "w_start_time"
+    t.time "w_end_time"
+    t.boolean "w_closing"
+    t.time "h_start_time"
+    t.time "h_end_time"
+    t.boolean "h_closing"
+    t.time "f_start_time"
+    t.time "f_end_time"
+    t.boolean "f_closing"
+    t.time "s_start_time"
+    t.time "s_end_time"
+    t.boolean "s_closing"
+    t.time "u_start_time"
+    t.time "u_end_time"
+    t.boolean "u_closing"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "weekday"
-    t.boolean "closed"
     t.index ["post_id"], name: "index_business_hours_on_post_id"
   end
 

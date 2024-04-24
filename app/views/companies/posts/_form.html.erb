@@ -10,18 +10,20 @@
   </div>
 
   <div class="field">
-  <%= f.label :business_hours, "営業時間" %>
-  <% ['月', '火', '水', '木', '金', '土', '日'].each do |day| %>
-    <div class="field">
-      <%= f.label "business_hours_attributes[#{day}_start_time]", "#{day}曜日 開始時間" %>
-      <%= f.time_field :"business_hours_attributes[#{day}_start_time]" %>
-      <%= f.label "business_hours_attributes[#{day}_end_time]", "#{day}曜日 終了時間" %>
-      <%= f.time_field :"business_hours_attributes[#{day}_end_time]" %>
-      <%= f.label "business_hours_closed_#{day}", " 定休日" %>
-      <%= f.check_box :"business_hours_closed_#{day}" %>
-    </div>
-  <% end %>
-</div>
+    <%= f.fields_for :business_hour do |f| %>
+      <%#= f.label :business_hours, "営業時間" %>
+      <% [['m', '月'], ['t', '火'], ['w', '水'], ['h', '木'], ['f', '金'], ['s', '土'], ['u', '日']].each do |english, japanese| %>
+        <div class="field">
+          <%= f.label "#{english}_start_time", "#{japanese}曜日 開始時間" %>
+          <%= f.time_field :"#{english}_start_time" %>
+          <%= f.label "#{english}_end_time", "#{japanese}曜日 終了時間" %>
+          <%= f.time_field :"#{english}_end_time" %>
+          <%= f.label "#{english}_closing", " 定休日" %>
+          <%= f.check_box :"#{english}_closing" %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 
   <%= f.label :drink_menu, "ドリンク一覧" %>
   <div class="field">
@@ -30,7 +32,7 @@
     <% end %>
     <%= link_to_add_association '追加', f, :drinks %>
   </div>
-  
+
 
   <div class="field">
     <%= f.label :popular_courses_and_prices, "人気コースと料金" %>
