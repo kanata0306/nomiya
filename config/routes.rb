@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  get 'users/show'
   devise_for :admins, controllers: {
     sessions: "admins/sessions",
     registrations: "admins/registrations"
@@ -14,14 +15,14 @@ Rails.application.routes.draw do
     sessions: "users/sessions",
     registrations: "users/registrations"
   }
-  
+  get "users/show" => "users#show"
   namespace :admins do
    resources :drink_categories
   end
 
   
   namespace :companies do
-    resources :posts
+    resources :posts 
   end
 
   

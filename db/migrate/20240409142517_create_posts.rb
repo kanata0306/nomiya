@@ -4,10 +4,7 @@ class CreatePosts < ActiveRecord::Migration[6.1]
       t.references :company, foreign_key: true, nill: false
       t.string :store_name
       t.text :store_description
-      t.string :business_hours
-      t.text :drink_menu
       t.text :popular_courses_and_prices
-      t.string :store_image
 
       t.timestamps
     end

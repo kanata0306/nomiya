@@ -1,0 +1,9 @@
+<ul>
+  <% post.business_hours.each do |business_hour| %>
+    <% if business_hour.is_closed? %>
+      <li><%= "#{ business_hour.week_day_i18n }: 定休日" %></li>
+    <% else %>
+      <li><%= "#{ business_hour.week_day_i18n }: #{ l(business_hour.open_time, format: :time) }~#{ l(business_hour.close_time, format: :time) }" %></li>
+    <% end %>
+  <% end %>
+</ul>

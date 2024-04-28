@@ -5,26 +5,30 @@ class Companies::PostsController < ApplicationController
   def new
     @post = Post.new
     @post.drinks.build
-    @post.build_business_hour
-
-    pp @post.business_hour
+    BusinessHour.week_days.each { |k, _v| @post.business_hours.build(week_day: k) }
   end
 
   def create
-    pp '----------------'
-    pp post_params
-
-
     @post = current_company.posts.build(post_params)
 
     if @post.save
       redirect_to companies_post_path(@post), notice: 'Post was successfully created.'
     else
+      p @post.errors.full_messages
       render :new
     end
   end
   def edit
     @post = Post.find(params[:id])
+  end
+  
+  def update
+    @post = Post.find(params[:id])
+    if @post.update(post_params)
+      redirect_to companies_post_path(@post)
+    else
+      render :edit
+    end
   end
 
   def index
@@ -60,25 +64,7 @@ def post_params
     :store_description,
     :popular_courses_and_prices,
     :store_image,
-
-    business_hour_attributes: [
-      :id,
-      :m_start_time, :m_end_time,
-      :t_start_time, :t_end_time,
-      :w_start_time, :w_end_time,
-      :h_start_time, :h_end_time,
-      :f_start_time, :f_end_time,
-      :s_start_time, :s_end_time,
-      :u_start_time, :u_end_time,
-      :m_closing,
-      :t_closing,
-      :w_closing,
-      :h_closing,
-      :f_closing,
-      :s_closing,
-      :u_closing,
-      :_destroy
-    ],
+    business_hours_attributes: [:id, :open_time, :close_time, :is_closed, :week_day ],
     drinks_attributes: [:id, :drink_category_id, :name, :price, :_destroy],
   )
 end

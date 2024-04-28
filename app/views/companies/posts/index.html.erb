@@ -3,11 +3,7 @@
   <h2><%= post.store_name %></h2>
   <p><%= post.store_description %></p>
   <p>営業時間：</p>
-  <ul>
-    <% post.business_hours.each do |day, hours| %>
-      <li><strong><%= day %>曜日：</strong> <%= hours %></li>
-    <% end %>
-  </ul>
+  <%= render "companies/posts/business_hours", post: post %>
   <p>ドリンク一覧：</p>
 <% drinks_by_category = post.drinks.group_by { |drink| drink.drink_category.name } %>
 <% drinks_by_category.each do |category, drinks| %>
@@ -15,7 +11,7 @@
   <ul>
     <% drinks.each do |drink| %>
       <li>
-        <strong>ドリンク名：</strong> <%= drink.name %>, 
+        <strong>ドリンク名：</strong> <%= drink.name %>,
         <strong>価格：</strong> <%= drink.price %>円
       </li>
     <% end %>

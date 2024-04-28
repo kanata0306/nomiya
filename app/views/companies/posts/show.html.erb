@@ -2,15 +2,7 @@
 <h2><%= @post.store_name %></h2>
 <p><%= @post.store_description %></p>
 <p>営業時間：</p>
-<ul>
-  <li>月: <%=  @post.business_hour.m_closing || (@post.business_hour.m_start_time.blank? || @post.business_hour.m_end_time.blank?) ? "定休日" : "#{@post.business_hour.m_start_time.strftime('%H:%M')} ～ #{@post.business_hour.m_end_time.strftime('%H:%M')}" %></li>
-  <li>火: <%=  @post.business_hour.t_closing || (@post.business_hour.t_start_time.blank? || @post.business_hour.t_end_time.blank?) ? "定休日" : "#{@post.business_hour.t_start_time.strftime('%H:%M')} ～ #{@post.business_hour.t_end_time.strftime('%H:%M')}" %></li>
-  <li>水: <%=  @post.business_hour.w_closing || (@post.business_hour.w_start_time.blank? || @post.business_hour.w_end_time.blank?) ? "定休日" : "#{@post.business_hour.w_start_time.strftime('%H:%M')} ～ #{@post.business_hour.w_end_time.strftime('%H:%M')}" %></li>
-  <li>木: <%=  @post.business_hour.h_closing || (@post.business_hour.h_start_time.blank? || @post.business_hour.h_end_time.blank?) ? "定休日" : "#{@post.business_hour.h_start_time.strftime('%H:%M')} ～ #{@post.business_hour.h_end_time.strftime('%H:%M')}" %></li>
-  <li>金: <%=  @post.business_hour.f_closing || (@post.business_hour.f_start_time.blank? || @post.business_hour.f_end_time.blank?) ? "定休日" : "#{@post.business_hour.f_start_time.strftime('%H:%M')} ～ #{@post.business_hour.f_end_time.strftime('%H:%M')}" %></li>
-  <li>土: <%=  @post.business_hour.s_closing || (@post.business_hour.s_start_time.blank? || @post.business_hour.s_end_time.blank?) ? "定休日" : "#{@post.business_hour.s_start_time.strftime('%H:%M')} ～ #{@post.business_hour.s_end_time.strftime('%H:%M')}" %></li>
-  <li>日: <%=  @post.business_hour.u_closing || (@post.business_hour.u_start_time.blank? || @post.business_hour.u_end_time.blank?) ? "定休日" : "#{@post.business_hour.u_start_time.strftime('%H:%M')} ～ #{@post.business_hour.u_end_time.strftime('%H:%M')}" %></li>
-</ul>
+<%= render 'companies/posts/business_hours', post: @post %>
 
 <p>ドリンク一覧：</p>
 <% drinks_by_category = @post.drinks.group_by { |drink| drink.drink_category.name } %>
@@ -26,7 +18,7 @@
   </ul>
 <% end %>
 
-<p>人気コースと料金：</p>
+<h2>人気コースと料金：</h2>
 <p><%= @post.popular_courses_and_prices %></p>
 <%= link_to '一覧に戻る', companies_posts_path %>
 <%= link_to '投稿を削除', companies_post_path(@post), method: :delete, data: { confirm: '本当に削除しますか？' } %>
