@@ -1,27 +1,36 @@
-<h2>投稿一覧</h2>
 <% @posts.each do |post| %>
-  <h2><%= post.store_name %></h2>
-  <p><%= post.store_description %></p>
-  <p>営業時間：</p>
-  <%= render "companies/posts/business_hours", post: post %>
-  <p>ドリンク一覧：</p>
-<% drinks_by_category = post.drinks.group_by { |drink| drink.drink_category.name } %>
-<% drinks_by_category.each do |category, drinks| %>
-  <h3><%= category %></h3>
-  <ul>
-    <% drinks.each do |drink| %>
-      <li>
-        <strong>ドリンク名：</strong> <%= drink.name %>,
-        <strong>価格：</strong> <%= drink.price %>円
-      </li>
+  <div class="row">
+    <div class="col-4">
+      <% if post.store_image.attached? %>
+        <%= image_tag post.store_image.variant(resize: '300x300') %>
+      <% else %>
+        <p>NO image</p>
+      <% end %>
+    </div>
+    <div class="col-2">
+      <p>営業時間：</p>
+      <%= render 'companies/posts/business_hours', post: post %>
+    </div>
+  </div>
+
+  <div>
+    <p>ドリンク一覧：</p>
+    <% drinks_by_category = post.drinks.group_by { |drink| drink.drink_category.name } %>
+    <% drinks_by_category.each do |category, drinks| %>
+      <h3><%= category %></h3>
+      <ul>
+        <% drinks.each do |drink| %>
+          <li>
+            <strong>ドリンク名：</strong> <%= drink.name %>,
+            <strong>価格：</strong> <%= drink.price %>円
+          </li>
+        <% end %>
+      </ul>
     <% end %>
-  </ul>
+  </div>
+
+  <%= link_to '詳細を見る', companies_post_path(post) %>
 <% end %>
 
-  </ul>
-  <p>人気コースと料金：</p>
-  <p><%= post.popular_courses_and_prices %></p>
-   <%= link_to '詳細を見る', companies_post_path(post) %>
-<% end %>
 <%= link_to '新規投稿', new_companies_post_path %>
 <%= link_to '一覧に戻る', companies_posts_path %>

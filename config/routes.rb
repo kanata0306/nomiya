@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  
-  get 'users/show'
+
+  #get 'companies/show'
+  #get 'users/show'
   devise_for :admins, controllers: {
     sessions: "admins/sessions",
     registrations: "admins/registrations"
@@ -10,7 +11,7 @@ Rails.application.routes.draw do
     sessions: "companies/sessions",
     registrations: "companies/registrations"
   }
-  
+
   devise_for :users, controllers: {
     sessions: "users/sessions",
     registrations: "users/registrations"
@@ -20,14 +21,18 @@ Rails.application.routes.draw do
    resources :drink_categories
   end
 
-  
+
   namespace :companies do
-    resources :posts 
+    resources :posts
+    resource :companies, only: [:show, :edit, :update, :destroy]
+  end
+  namespace :users do
+    resources :posts do
+        resources :comments
+    end
   end
 
-  
-
-  get 'homes/top'
+  #get 'homes/top'
 
   root to: "homes#top"
 

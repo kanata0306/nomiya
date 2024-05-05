@@ -1,7 +1,8 @@
 class Post < ApplicationRecord
-  has_many :drinks
+  has_many :drinks, dependent: :destroy
   belongs_to :company
-  has_many :business_hours
+  has_many :business_hours, dependent: :destroy
+  has_many :comments, dependent: :destroy
   
   has_one_attached :store_image
   

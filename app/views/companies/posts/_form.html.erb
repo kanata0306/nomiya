@@ -19,11 +19,11 @@
         </div>
         <div class="d-flex">
           <%= f.label :open_time, "開始時間", class: "mx-2" %>
-          <%= f.time_select :open_time, { minute_step: 30, include_blank: true }, { class: "form-control mx-2", style: "width: 80px;" } %>
+          <%= f.time_select :open_time, { minute_step: 30, ignore_date: true, prompt: true }, { class: "form-control mx-2", style: "width: 80px;" } %>
         </div>
         <div class="d-flex">
           <%= f.label :close_time, "終了時間", class: "mx-2" %>
-          <%= f.time_select :close_time, { minute_step: 30, include_blank: true }, { class: "form-control mx-2", style: "width: 80px;" } %>
+          <%= f.time_select :close_time, { minute_step: 30, ignore_date: true, prompt: true }, { class: "form-control mx-2", style: "width: 80px;" } %>
         </div>
         <div class="d-flex">
           <%= f.label :is_closed, " 定休日", class: "mx-2" %>

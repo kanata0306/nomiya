@@ -1,7 +1,7 @@
 class Companies::PostsController < ApplicationController
-
-  before_action :authenticate_company!, only: [:new, :create]
-
+  before_action :authenticate_company!, only: [:new, :create, :edit, :update]
+  before_action :authenticate_user!, only: [:show, :create]
+  
   def new
     @post = Post.new
     @post.drinks.build
@@ -10,7 +10,6 @@ class Companies::PostsController < ApplicationController
 
   def create
     @post = current_company.posts.build(post_params)
-
     if @post.save
       redirect_to companies_post_path(@post), notice: 'Post was successfully created.'
     else
@@ -18,10 +17,11 @@ class Companies::PostsController < ApplicationController
       render :new
     end
   end
+
   def edit
     @post = Post.find(params[:id])
   end
-  
+
   def update
     @post = Post.find(params[:id])
     if @post.update(post_params)
@@ -33,10 +33,17 @@ class Companies::PostsController < ApplicationController
 
   def index
     @posts = Post.includes(:business_hours, :drinks).all
+    @post = Post.all
   end
 
   def show
     @post = Post.find(params[:id])
+    @comments = @post.comments
+    @comment = Comment.new
+    
+    # @comment = current_user.comments.new
+
+
   end
 
   def destroy

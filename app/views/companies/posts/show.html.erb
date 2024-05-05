@@ -1,13 +1,23 @@
 <h2>投稿詳細</h2>
 <h2><%= @post.store_name %></h2>
 <p><%= @post.store_description %></p>
-<p>営業時間：</p>
-<%= render 'companies/posts/business_hours', post: @post %>
-
+<div class="row">
+  <div class="col-4">
+    <% if @post.store_image.attached? %>
+    <%= image_tag @post.store_image.variant(resize: '300x300') %>
+    <% else %>
+    <P>NO image</P>
+    <% end %>
+  </div>
+  <div class="col-2">
+    <p>営業時間：</p>
+    <%= render 'companies/posts/business_hours', post: @post %>
+  </div>
+</div>
 <p>ドリンク一覧：</p>
 <% drinks_by_category = @post.drinks.group_by { |drink| drink.drink_category.name } %>
 <% drinks_by_category.each do |category, drinks| %>
-  <h3><%= category %></h3>
+  <h3><%= category %></h3>　
   <ul>
     <% drinks.each do |drink| %>
       <li>
@@ -17,8 +27,24 @@
     <% end %>
   </ul>
 <% end %>
-
 <h2>人気コースと料金：</h2>
 <p><%= @post.popular_courses_and_prices %></p>
+<h2>コメント</h2>
+<%= form_with(model: @comment, url: users_post_comments_path(@post), method: :post) do |f| %>
+  <%= f.text_area :comment_content %>
+  <%= f.hidden_field :post_id, value: @post.id %>
+  <%= f.submit 'コメントする' %>
+<% end %>
+<h2>コメント一覧</h2>
+<% @comments.each do |comment| %>
+<li>
+  <string><%= comment.user.name %></string>
+  <string><%= comment.comment_content %></string>
+</li>
+<% end %>
+
 <%= link_to '一覧に戻る', companies_posts_path %>
-<%= link_to '投稿を削除', companies_post_path(@post), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+<% if @post.company == current_company %>
+  <%= link_to '投稿を削除', companies_post_path(@post), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+  <%= link_to '投稿を編集する', edit_companies_post_path(@post) %>
+<% end %>

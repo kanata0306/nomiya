@@ -1,8 +1,9 @@
 <h2>投稿edit</h2>
 
 <%= form_with(model: @post, url: companies_post_path(@post), local: true) do |f| %>
+  <%= render 'layouts/error_messages', model: f.object %>
   <%= render 'form', f: f %>
   <div class="actions">
-    <%= f.submit "hennshuuする" %>
+    <%= f.submit "編集する" %>
   </div>
 <% end %>

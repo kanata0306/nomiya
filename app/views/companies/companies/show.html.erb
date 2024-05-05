@@ -1,0 +1,13 @@
+<h1>企業詳細</h1>
+
+<h3>企業名</h3>
+<%= @company.company_name %>
+<h3>代表者名</h3>
+<%= @company.representative_name %>
+<h3>代表写メール</h3>
+<%= @company.email %>
+<h3>電話番号</h3>
+<%= @company.phone_number %>
+<h3>住所</h3>
+<%= @company.address %> <br >
+<%= link_to "編集", edit_companies_companies_path %>

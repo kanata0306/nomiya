@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Companies::RegistrationsController < Devise::RegistrationsController
-  before_action :configure_permitted_parameters, if: :devise_controller? #ログイン機能について
+  before_action :configure_permitted_parameters, if: :devise_controller?
   # GET /resource/sign_up
   def new
     super
@@ -62,9 +62,19 @@ class Companies::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+  
+  def update_resource(resource, params)
+    resource.update_without_password(params)
+  end
+
+  
+  def after_update_path_for(resource)
+    company_session_path(resource)
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:company_name, :representative_name, :phone_number, :address])
+    devise_parameter_sanitizer.permit(:update, keys: [:company_name, :representative_name, :phone_number, :address])
   end
 
 

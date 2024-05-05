@@ -7,7 +7,7 @@ class Company < ApplicationRecord
 
   # 空白を禁止するバリデーションを追加
   validates :company_name, :representative_name, :phone_number, :address, presence: true
-
+  validates :password, presence: true, on: :create
   has_one_attached :image
-  has_many :posts
+  has_many :posts, dependent: :destroy
 end

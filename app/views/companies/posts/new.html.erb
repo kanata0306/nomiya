@@ -1,6 +1,7 @@
 <h2>新規投稿</h2>
 
 <%= form_with(model: @post, url: companies_posts_path, local: true) do |f| %>
+  <%= render 'layouts/error_messages', model: f.object %>
   <%= render 'form', f: f %>
   <div class="actions">
     <%= f.submit "投稿する" %>
