@@ -33,6 +33,9 @@ Rails.application.routes.draw do
     end
   end
 
+  delete "users/posts/:post_id/favorites/:id", to: "users/favorites#destroy", as: "delete_user_post_favorite"
+
+
   #get 'homes/top'
 
   root to: "homes#top"

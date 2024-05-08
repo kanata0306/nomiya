@@ -17,7 +17,7 @@
 <p>ドリンク一覧：</p>
 <% drinks_by_category = @post.drinks.group_by { |drink| drink.drink_category.name } %>
 <% drinks_by_category.each do |category, drinks| %>
-  <h3><%= category %></h3>　
+  <h3><%= category %></h3>
   <ul>
     <% drinks.each do |drink| %>
       <li>
@@ -35,6 +35,17 @@
   <%= f.hidden_field :post_id, value: @post.id %>
   <%= f.submit 'コメントする' %>
 <% end %>
+
+<% if @post.favorited?(current_user) %>
+    <%= link_to users_post_favorite_path(@post.id), method: :delete do %>
+        <span style="color:red;">❤︎</span><span>いいね</span>
+    <% end %>
+<% else %>
+    <%= link_to users_post_favorites_path(@post.id), method: :post do %>
+        <span>❤︎</span><span>いいね</span>
+    <% end %>
+<% end %>
+
 <h2>コメント一覧</h2>
 <% @comments.each do |comment| %>
 <li>

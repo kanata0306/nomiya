@@ -3,7 +3,7 @@ class Post < ApplicationRecord
   has_many :drinks, dependent: :destroy
   has_many :business_hours, dependent: :destroy
   has_many :comments, dependent: :destroy   
-  has_many :faborites, dependent: :destroy
+  has_many :favorites, dependent: :destroy
   has_one_attached :store_image
   
   accepts_nested_attributes_for :drinks, reject_if: :all_blank, allow_destroy: true
