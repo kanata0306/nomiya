@@ -1,9 +1,12 @@
-<h2>新規投稿</h2>
-
-<%= form_with(model: @post, url: companies_posts_path, local: true) do |f| %>
-  <%= render 'layouts/error_messages', model: f.object %>
-  <%= render 'form', f: f %>
-  <div class="actions">
-    <%= f.submit "投稿する" %>
+<div class="row">
+  <div class="col-md-8 offset-md-2">
+    <h1 class="mt-4 mb-3">新規投稿</h1>
+    <%= form_with(model: @post, url: companies_posts_path, local: true) do |f| %>
+      <%= render 'layouts/error_messages', model: f.object %>
+      <%= render 'form', f: f %>
+      <div class="actions">
+        <%= f.submit "投稿する", class: "btn btn-primary btn-block" %>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>

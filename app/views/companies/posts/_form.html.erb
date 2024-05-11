@@ -1,55 +1,70 @@
 
-  <div class="field">
+  <div class="forn-group">
     <%= f.label :store_name, "店舗名" %>
-    <%= f.text_field :store_name %>
+    <%= f.text_field :store_name, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :store_description, "店舗紹介" %>
-    <%= f.text_area :store_description %>
+    <%= f.text_area :store_description, class: "form-control", rows: 5 %>
   </div>
 
-  <div class="field">
-    <label>business_hours</label>
-    <%= f.fields_for :business_hours do |f| %>
-      <div class="form-frou d-flex my-2">
-        <div class="d-flex">
-          <%= f.object.week_day_i18n %>
-          <%= f.hidden_field :week_day %>
-        </div>
-        <div class="d-flex">
-          <%= f.label :open_time, "開始時間", class: "mx-2" %>
-          <%= f.time_select :open_time, { minute_step: 30, ignore_date: true, prompt: true }, { class: "form-control mx-2", style: "width: 80px;" } %>
-        </div>
-        <div class="d-flex">
-          <%= f.label :close_time, "終了時間", class: "mx-2" %>
-          <%= f.time_select :close_time, { minute_step: 30, ignore_date: true, prompt: true }, { class: "form-control mx-2", style: "width: 80px;" } %>
-        </div>
-        <div class="d-flex">
-          <%= f.label :is_closed, " 定休日", class: "mx-2" %>
-          <%= f.check_box :is_closed %>
-        </div>
+  <div class="form-group">
+    <label>営業時間</label>
+    <div class="card">
+      <div class="card-body">
+        <%= f.fields_for :business_hours do |f| %>
+          <div class="form-frou d-flex my-2">
+            <div class="d-flex">
+              <%= f.object.week_day_i18n %>
+              <%= f.hidden_field :week_day %>
+            </div>
+            <div class="d-flex">
+              <%= f.label :open_time, "開始時間", class: "mx-2" %>
+              <%= f.time_select :open_time, { minute_step: 30, ignore_date: true, prompt: true }, { class: "form-control mx-2", style: "width: 80px;" } %>
+            </div>
+            <div class="d-flex">
+              <%= f.label :close_time, "終了時間", class: "mx-2" %>
+              <%= f.time_select :close_time, { minute_step: 30, ignore_date: true, prompt: true }, { class: "form-control mx-2", style: "width: 80px;" } %>
+            </div>
+            <div class="d-flex">
+              <%= f.label :is_closed, " 定休日", class: "mx-2" %>
+              <%= f.check_box :is_closed %>
+            </div>
+          </div>
+        <% end %>
       </div>
-    <% end %>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="d-flex mb-2 mt-4">
+      <%= f.label :drink_menu, "ドリンク一覧", class: "mt-1 mr-5" %>
+      <%= link_to_add_association 'メニューを追加', f, :drinks,
+          class: "btn btn-primary btn-sm",
+          data: {
+            "association-insertion-node": "#menues",
+            "association-insertion-method": "append"
+          }
+      %>
+    </div>
+    <div class="card">
+      <div class="card-body" id="menues">
+        <%= f.fields_for :drinks do |drink| %>
+          <%= render 'drink_fields', f: drink %>
+        <% end %>
+      </div>
+    </div>
   </div>
 
-  <%= f.label :drink_menu, "ドリンク一覧" %>
-  <div class="field">
-    <%= f.fields_for :drinks do |drink| %>
-      <%= render 'drink_fields', f: drink %>
-    <% end %>
-    <%= link_to_add_association '追加', f, :drinks %>
-  </div>
-
-
-  <div class="field">
+  <div class="form-group">
     <%= f.label :popular_courses_and_prices, "人気コースと料金" %>
-    <%= f.text_area :popular_courses_and_prices %>
+    <%= f.text_area :popular_courses_and_prices, class: "form-control", rows: 7 %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :store_image, "店舗画像" %>
-    <%= f.file_field :store_image, accept: "image/*" %>
+    <%= f.file_field :store_image, accept: "image/*", class: "form-control" %>
   </div>
 
 

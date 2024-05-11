@@ -1,11 +1,11 @@
-<ul>
-  <% post.business_hours.each do |business_hour| %>
+<% post.business_hours.each do |business_hour| %>
+  <tr>
     <% if business_hour.is_closed? %>
-      <li><%= "#{ business_hour.week_day_i18n }: 定休日" %></li>
+        <td><%= "#{ business_hour.week_day_i18n }: 定休日" %></td>
     <% elsif business_hour.open_time.blank? || business_hour.close_time.blank? %>
-      <li><%= "#{ business_hour.week_day_i18n }: no-data" %></li>
+      <td><%= "#{ business_hour.week_day_i18n }: no-data" %></td>
     <% else %>
-      <li><%= "#{ business_hour.week_day_i18n }: #{ l(business_hour.open_time, format: :time) }~#{ l(business_hour.close_time, format: :time) }" %></li>
+      <td><%= "#{ business_hour.week_day_i18n }: #{ l(business_hour.open_time, format: :time) }~#{ l(business_hour.close_time, format: :time) }" %></li>
     <% end %>
-  <% end %>
-</ul>
+  </tr>
+<% end %>

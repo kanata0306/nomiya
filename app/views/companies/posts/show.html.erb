@@ -1,61 +1,122 @@
-<h2>投稿詳細</h2>
-<h2><%= @post.store_name %></h2>
-<p><%= @post.store_description %></p>
+<h1 class="mt-4 mb-3"><%= @post.store_name %>詳細</h1>
+
+<div class="border-top my-5 d-none d-md-block"></div>
+
+<div class="d-flex justify-content-between">
+  <h2>店舗情報</h2>
+  <% if @post.favorited?(current_user) %>
+    <%= link_to users_post_favorite_path(@post.id), method: :delete, class: "ml-2 mt-3" do %> <%= @post.favorites.count %>
+      <span style="color:red;">❤︎</span><span>いいね</span>
+    <% end %>
+  <% else %>
+    <%= link_to users_post_favorites_path(@post.id), method: :post, class: "ml-2 mt-3" do %> <%= @post.favorites.count %>
+      <span>❤︎</span><span>いいね</span>
+    <% end %>
+  <% end %>
+</div>
+
 <div class="row">
-  <div class="col-4">
+  <div class="col-md-3 mb-3">
     <% if @post.store_image.attached? %>
-    <%= image_tag @post.store_image.variant(resize: '300x300') %>
+      <%= image_tag @post.store_image.variant(resize: '600x600'), class: "img-fluid" %>
     <% else %>
-    <P>NO image</P>
+      <P>NO image</P>
     <% end %>
   </div>
-  <div class="col-2">
-    <p>営業時間：</p>
-    <%= render 'companies/posts/business_hours', post: @post %>
+  <div class="col-md-9 mb-3">
+    <table class="table table-bordered table-responsive-sm">
+      <tbody>
+        <tr>
+          <th>store_name</th>
+          <td><%= @post.store_name %></td>
+        </tr>
+        <tr>
+          <th>store_description</th>
+          <td><%= @post.store_description %></td>
+        </tr>
+        <tr>
+          <th rowspan="8">営業時間</th>
+        </tr>
+        <%= render 'companies/posts/business_hours', post: @post %>
+      </tbody>
+    </table>
   </div>
 </div>
-<p>ドリンク一覧：</p>
-<% drinks_by_category = @post.drinks.group_by { |drink| drink.drink_category.name } %>
-<% drinks_by_category.each do |category, drinks| %>
-  <h3><%= category %></h3>
-  <ul>
-    <% drinks.each do |drink| %>
-      <li>
-        <strong>ドリンク名：</strong> <%= drink.name %>,
-        <strong>価格：</strong> <%= drink.price %>円
-      </li>
-    <% end %>
-  </ul>
-<% end %>
-<h2>人気コースと料金：</h2>
-<p><%= @post.popular_courses_and_prices %></p>
-<h2>コメント</h2>
-<%= form_with(model: @comment, url: users_post_comments_path(@post), method: :post) do |f| %>
-  <%= f.text_area :comment_content %>
-  <%= f.hidden_field :post_id, value: @post.id %>
-  <%= f.submit 'コメントする' %>
-<% end %>
 
-<% if @post.favorited?(current_user) %>
-    <%= link_to users_post_favorite_path(@post.id), method: :delete do %>
-        <span style="color:red;">❤︎</span><span>いいね</span>
-    <% end %>
-<% else %>
-    <%= link_to users_post_favorites_path(@post.id), method: :post do %>
-        <span>❤︎</span><span>いいね</span>
-    <% end %>
-<% end %>
+<div class="border-top my-5 d-none d-md-block"></div>
 
-<h2>コメント一覧</h2>
-<% @comments.each do |comment| %>
-<li>
-  <string><%= comment.user.name %></string>
-  <string><%= comment.comment_content %></string>
-</li>
-<% end %>
+<div class="row">
+  <div class="col-md-6 mb-3">
+    <h2>人気コースと料金</h2>
+    <p><%= simple_format @post.popular_courses_and_prices %></p>
+  </div>
+  <div class="col-md-6 mb-3">
+    <h2>ドリンク一覧</h2>
+    <% drinks_by_category = @post.drinks.group_by { |drink| drink.drink_category.name } %>
+    <table class="table table-bordered table-responsive-sm">
+      <thead>
+        <tr>
+          <th>カテゴリー</th>
+          <th>ドリンク</th>
+          <th>価格</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% drinks_by_category.each do |category, drinks| %>
+          <ul>
+            <% drinks.each_with_index do |drink, i| %>
+              <tr>
+                <td><%= category if i == 0 %></td>
+                <td><%= drink.name %></td>
+                <td><%= drink.price %>円</td>
+              </tr>
+            <% end %>
+          </ul>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-<%= link_to '一覧に戻る', companies_posts_path %>
-<% if @post.company == current_company %>
-  <%= link_to '投稿を削除', companies_post_path(@post), method: :delete, data: { confirm: '本当に削除しますか？' } %>
-  <%= link_to '投稿を編集する', edit_companies_post_path(@post) %>
-<% end %>
+<div class="border-top my-5 d-none d-md-block"></div>
+
+<div class="row">
+  <div class="col-md-4 mb-3">
+    <h2>コメントを書く</h2>
+    <%= form_with(model: @comment, url: users_post_comments_path(@post), method: :post) do |f| %>
+      <div class="form-group">
+        <%= f.text_area :comment_content, class: "form-control", rows: 5, placeholder: "お店の情報にコメントを誇すことができます。" %>
+      </div>
+      <%= f.hidden_field :post_id, value: @post.id %>
+      <%= f.submit 'コメントする', class: "btn btn-primary btn-block" %>
+    <% end %>
+  </div>
+  <div class="col-md-8 mb-3">
+    <h2>コメント一覧</h2>
+    
+    <table class="table">
+      <tbody>
+        <% @comments.each do |comment| %>
+          <tr>
+            <td><%= comment.user.name %></td>
+            <td><%= comment.comment_content %></td>
+            <td><%= l(comment.created_at, format: :short) %></td>
+            <td>
+              <% if current_user && current_user.id == comment.user_id %>
+                <%= link_to "削除する", users_post_comment_path(@post, comment), method: :delete %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="d-flex mt-4">
+  <%= link_to '一覧に戻る', companies_posts_path, class: "btn btn-secondary" %>
+  <% if @post.company == current_company %>
+    <%= link_to '投稿を削除', companies_post_path(@post), method: :delete, class: "btn btn-danger", data: { confirm: '本当に削除しますか？' } %>
+    <%= link_to '投稿を編集する', edit_companies_post_path(@post), class: "btn btn-warning" %>
+  <% end %>
+</div>

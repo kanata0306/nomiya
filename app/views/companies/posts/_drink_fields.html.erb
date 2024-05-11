@@ -1,6 +1,6 @@
-<div class="nested-fields">
-    <%= f.select :drink_category_id, DrinkCategory.all.map { |category| [category.name, category.id] }, include_blank: true, prompt: "ドリンクの種類" %>
-    <%= f.text_field :name, placeholder: "ドリンク名" %>
-    <%= f.text_field :price, placeholder: "価格" %>
-    <%= link_to_remove_association "削除", f %>
+<div class="nested-fields d-flex mb-2">
+    <%= f.select :drink_category_id, DrinkCategory.all.map { |category| [category.name, category.id] }, { include_blank: true, prompt: "ドリンクの種類" }, { class: "form-control w-25 mr-2" } %>
+    <%= f.text_field :name, placeholder: "ドリンク名", class: "form-control w-25 mr-2" %>
+    <%= f.text_field :price, placeholder: "価格", class: "form-control w-25 mr-4" %>
+    <%= link_to_remove_association "削除", f, class: "btn btn-danger" %>
 </div>

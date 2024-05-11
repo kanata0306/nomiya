@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   end
   namespace :users do
     resources :posts do
-        resources :comments
+        resources :comments, only: [:create, :destroy]
         resources :favorites, only: [:create, :destroy]
     end
   end

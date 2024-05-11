@@ -32,8 +32,7 @@ class Companies::PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.includes(:business_hours, :drinks).all
-    @post = Post.all
+    @posts = Post.includes(:business_hours, :drinks)
   end
 
   def show
