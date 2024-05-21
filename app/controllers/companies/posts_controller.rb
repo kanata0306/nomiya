@@ -1,6 +1,6 @@
 class Companies::PostsController < ApplicationController
-  before_action :authenticate_company!, only: [:new, :create, :edit, :update]
-  before_action :authenticate_user!, only: [:show, :create]
+  before_action :authenticate_company!, only: [:new, :create, :index, :show, :edit, :update, :destroy]
+  #before_action :authenticate_user!, only: [:show, :create]
   
   def new
     @post = Post.new
@@ -32,7 +32,19 @@ class Companies::PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.includes(:business_hours, :drinks)
+    if current_company
+      @posts = current_company.posts.includes(:business_hours, :drinks)
+    else
+      @posts = Post.includes(:business_hours, :drinks)
+    end
+    if params[:keyword].present?
+      @posts = @posts.where("store_name LIKE(?)", "%#{params[:keyword]}%").or(
+               @posts.where("store_description LIKE(?)", "%#{params[:keyword]}%")).or(
+               @posts.where('drinks.name LIKE ?', "%#{params[:keyword]}%").references(:drinks))
+    end
+    if params[:business_hour].present?
+      @posts =  @posts.where('business_hours.week_day': "#{params[:business_hour]}", 'business_hours.is_closed': false).references(:business_hours)
+    end
   end
 
   def show

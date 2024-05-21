@@ -4,13 +4,15 @@
 
 <div class="d-flex justify-content-between">
   <h2>店舗情報</h2>
-  <% if @post.favorited?(current_user) %>
-    <%= link_to users_post_favorite_path(@post.id), method: :delete, class: "ml-2 mt-3" do %> <%= @post.favorites.count %>
-      <span style="color:red;">❤︎</span><span>いいね</span>
-    <% end %>
-  <% else %>
-    <%= link_to users_post_favorites_path(@post.id), method: :post, class: "ml-2 mt-3" do %> <%= @post.favorites.count %>
-      <span>❤︎</span><span>いいね</span>
+  <% if current_user %>
+    <% if @post.favorited?(current_user) %>
+      <%= link_to users_post_favorite_path(@post.id), method: :delete, class: "ml-2 mt-3" do %> <%= @post.favorites.count %>
+        <span style="color:red;">❤︎</span><span>いいね</span>
+      <% end %>
+    <% else %>
+      <%= link_to users_post_favorites_path(@post.id), method: :post, class: "ml-2 mt-3" do %> <%= @post.favorites.count %>
+        <span>❤︎</span><span>いいね</span>
+      <% end %>
     <% end %>
   <% end %>
 </div>
@@ -27,11 +29,11 @@
     <table class="table table-bordered table-responsive-sm">
       <tbody>
         <tr>
-          <th>store_name</th>
+          <th>店舗名</th>
           <td><%= @post.store_name %></td>
         </tr>
         <tr>
-          <th>store_description</th>
+          <th>コメント</th>
           <td><%= @post.store_description %></td>
         </tr>
         <tr>

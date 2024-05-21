@@ -1,28 +1,43 @@
-<h1 class="mt-4 mb-3">title</h1>
+<h1 class="mt-4 mb-3">Nomiya</h1>
+<div>
+  <%= form_with url: companies_posts_path, method: :get do |f| %>
+    キーワード検索:<%= f.search_field :keyword, value: params[:keyword] %>
+    営業日:<%= f.collection_select :business_hour, BusinessHour.week_days_i18n, :first, :last, { include_blank: "--ALL--", selected: params[:business_hour] }, {  } %>
+    <%= f.submit "検索する"%>
+  <% end %>
+</div>
 
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th>store_image</th>
-      <th>store_name</th>
-      <th>store_description</th>
       <th></th>
+      <th>店舗名</th>
+      <th colspan="2">コメント</th>
     </tr>
   </thead>
   <tbldy>
-    <% @posts.each do |post| %>
+    <% if @posts.any? %>
+      <% @posts.each do |post| %>
+        <tr>
+          <td>
+            <% if post.store_image.attached? %>
+              <%= image_tag post.store_image.variant(resize: '50x50') %>
+            <% else %>
+              <p>NO image</p>
+            <% end %>
+          </td>
+          <td><%= post.store_name %></td>
+          <td><%= post.store_description %></td>
+          <td><%= link_to '詳細', companies_post_path(post), class: "btn btn-primary" %></td>
+        </tr>
+      <% end %>
+    <% else %>
       <tr>
-        <td>
-          <% if post.store_image.attached? %>
-            <%= image_tag post.store_image.variant(resize: '50x50') %>
-          <% else %>
-            <p>NO image</p>
-          <% end %>
-        </td>
-        <td><%= post.store_name %></td>
-        <td><%= post.store_description %></td>
-        <td> <%= link_to '詳細', companies_post_path(post), class: "btn btn-primary" %></td>
+        <td colspan="4">no-data</td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+
+<%= link_to "new_post", new_companies_post_path, class: "btn btn-primary" %>

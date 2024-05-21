@@ -14,7 +14,7 @@
     <header>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-          <%= link_to "Navbar", root_url, class: "navbar-brand" %>
+          <%= link_to "Navbar", companies_posts_path, class: "navbar-brand" %>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -29,7 +29,7 @@
               <% if company_signed_in? %>
                 <%= link_to "投稿一覧", companies_posts_path, class: "nav-item nav-link" %>
                 <%= link_to "企業詳細", companies_companies_path, class: "nav-item nav-link" %>
-                <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-item nav-link" %>
+                <%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { confirm: "本当にログアウトしますか？" }, class: "nav-item nav-link" %>
                 <%= link_to "アカウント削除", user_registration_path, method: :delete, data: { confirm: "本当にアカウントを削除しますか？" }, class: "nav-item nav-link" %>
               <% end %>
               <% unless signed_in? %>

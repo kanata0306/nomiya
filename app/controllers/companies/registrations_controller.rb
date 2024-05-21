@@ -66,10 +66,13 @@ class Companies::RegistrationsController < Devise::RegistrationsController
   def update_resource(resource, params)
     resource.update_without_password(params)
   end
-
   
   def after_update_path_for(resource)
     company_session_path(resource)
+  end
+  
+  def after_sign_up_for(resource)
+    company_root_path
   end
 
   def configure_permitted_parameters
