@@ -1,0 +1,31 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th></th>
+      <th>店舗名</th>
+      <th colspan="2">コメント</th>
+    </tr>
+  </thead>
+  <tbldy>
+    <% if posts.any? %>
+      <% posts.each do |post| %>
+        <tr>
+          <td>
+            <% if post.store_image.attached? %>
+              <%= image_tag post.store_image.variant(resize: '50x50') %>
+            <% else %>
+              <p>NO image</p>
+            <% end %>
+          </td>
+          <td><%= post.store_name %></td>
+          <td><%= post.store_description %></td>
+          <td><%= link_to '詳細', companies_post_path(post), class: "btn btn-primary" %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="4">no-data</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

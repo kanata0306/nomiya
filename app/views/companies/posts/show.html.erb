@@ -33,6 +33,10 @@
           <td><%= @post.store_name %></td>
         </tr>
         <tr>
+          <th>住所</th>
+          <td><%= @company.address %></td>
+        </tr>
+        <tr>
           <th>コメント</th>
           <td><%= @post.store_description %></td>
         </tr>
@@ -70,7 +74,7 @@
               <tr>
                 <td><%= category if i == 0 %></td>
                 <td><%= drink.name %></td>
-                <td><%= drink.price %>円</td>
+                <td><%= drink.price.to_i %>円</td>
               </tr>
             <% end %>
           </ul>
@@ -87,7 +91,7 @@
     <h2>コメントを書く</h2>
     <%= form_with(model: @comment, url: users_post_comments_path(@post), method: :post) do |f| %>
       <div class="form-group">
-        <%= f.text_area :comment_content, class: "form-control", rows: 5, placeholder: "お店の情報にコメントを誇すことができます。" %>
+        <%= f.text_area :comment_content, class: "form-control", rows: 5, placeholder: "お店の情報にコメントを残すことができます。" %>
       </div>
       <%= f.hidden_field :post_id, value: @post.id %>
       <%= f.submit 'コメントする', class: "btn btn-primary btn-block" %>

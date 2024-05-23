@@ -14,23 +14,26 @@
     <header>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-          <%= link_to "Navbar", companies_posts_path, class: "navbar-brand" %>
+          <%= link_to "Nomiya", companies_posts_path, class: "navbar-brand" %>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <% if user_signed_in? %>
-                <%= link_to "投稿一覧", companies_posts_path, class: "nav-item nav-link" %>
+                <%= link_to "投稿一覧", root_path, class: "nav-item nav-link" %>
                 <%= link_to "ユーザー詳細", users_show_path, class: "nav-item nav-link" %>
-                <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-item nav-link" %>
+                <%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { confirm: "本当にログアウトしますか？" }, class: "nav-item nav-link" %>
                 <%= link_to "アカウント削除", user_registration_path, method: :delete, data: { confirm: "本当にアカウントを削除しますか？" }, class: "nav-item nav-link" %>
               <% end %>
               <% if company_signed_in? %>
-                <%= link_to "投稿一覧", companies_posts_path, class: "nav-item nav-link" %>
+                <%= link_to "自社投稿一覧", companies_posts_path, class: "nav-item nav-link" %>
                 <%= link_to "企業詳細", companies_companies_path, class: "nav-item nav-link" %>
                 <%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { confirm: "本当にログアウトしますか？" }, class: "nav-item nav-link" %>
                 <%= link_to "アカウント削除", user_registration_path, method: :delete, data: { confirm: "本当にアカウントを削除しますか？" }, class: "nav-item nav-link" %>
+              <% end %>
+              <% if admin_signed_in? %>
+                <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, data: { confirm: "本当にログアウトしますか？" }, class: "nav-item nav-link" %>
               <% end %>
               <% unless signed_in? %>
                 <%= link_to "新規登録", new_user_registration_path, class: "nav-item nav-link" %>
@@ -44,8 +47,7 @@
     <div class="container">
       <%= render 'layouts/flash_messages' %>
       <%= yield %>
-      company:<%= current_company.inspect %><br>
-    user:<%= current_user.inspect %>
+      
     </div>
   </body>
 </html>

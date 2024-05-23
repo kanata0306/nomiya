@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   #get 'companies/show'
   #get 'users/show'
   devise_for :admins, controllers: {
@@ -17,10 +16,11 @@ Rails.application.routes.draw do
     registrations: "users/registrations"
   }
   get "users/show" => "users#show"
-  namespace :admins do
-   resources :drink_categories
+  namespace :admin do
+    root 'homes#top'
+    resources :drink_categories
+    resources :comments, only: [:index, :destroy]
   end
-
 
   namespace :companies do
     resources :posts

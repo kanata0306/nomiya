@@ -1,6 +1,6 @@
 <h2>ドリンクカテゴリーの編集</h2>
 
-<%= form_with(model: @drink_category, url: admins_drink_category_path(@drink_category), method: :put) do |f| %>
+<%= form_with(model: @drink_category, url: admin_drink_category_path(@drink_category), method: :put) do |f| %>
   <div class="field">
     <%= f.label :name, "カテゴリー名" %>
     <%= f.text_field :name %>
@@ -8,4 +8,4 @@
   <%= f.submit "更新" %>
 <% end %>
 
-<%= link_to "戻る", admins_drink_categories_path %>
+<%= link_to "戻る", admin_drink_categories_path %>

@@ -1,6 +1,7 @@
 class Companies::PostsController < ApplicationController
-  before_action :authenticate_company!, only: [:new, :create, :index, :show, :edit, :update, :destroy]
-  #before_action :authenticate_user!, only: [:show, :create]
+  before_action :authenticate_company!, only: [:new, :create, :edit, :update, :destroy]
+  #before_action :authenticate_user!, only: [:show]
+  before_action :user_check, only: [:index]
   
   def new
     @post = Post.new
@@ -51,7 +52,7 @@ class Companies::PostsController < ApplicationController
     @post = Post.find(params[:id])
     @comments = @post.comments
     @comment = Comment.new
-    
+    @company = @post.company
     # @comment = current_user.comments.new
 
 
@@ -64,26 +65,27 @@ class Companies::PostsController < ApplicationController
     @post.destroy
     redirect_to companies_posts_path, notice: "投稿を削除しました"
   end
-end
-
-private
-
+  
+  private
+  
   def authenticate_company!
     unless current_company
       redirect_to root_path, alert: "ログインしていません"
     end
   end
-
-private
-
-def post_params
-  params.require(:post).permit(
-    :store_name,
-    :store_description,
-    :popular_courses_and_prices,
-    :store_image,
-    business_hours_attributes: [:id, :open_time, :close_time, :is_closed, :week_day ],
-    drinks_attributes: [:id, :drink_category_id, :name, :price, :_destroy],
-  )
+  
+  def user_check
+    redirect_to root_url if current_user
+  end
+  
+  def post_params
+    params.require(:post).permit(
+      :store_name,
+      :store_description,
+      :popular_courses_and_prices,
+      :store_image,
+      business_hours_attributes: [:id, :open_time, :close_time, :is_closed, :week_day ],
+      drinks_attributes: [:id, :drink_category_id, :name, :price, :_destroy],
+    )
+  end
 end
-

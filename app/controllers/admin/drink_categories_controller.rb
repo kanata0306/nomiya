@@ -1,4 +1,4 @@
-class Admins::DrinkCategoriesController < ApplicationController
+class Admin::DrinkCategoriesController < ApplicationController
   before_action :authenticate_admin!
   
   def index
@@ -12,7 +12,7 @@ class Admins::DrinkCategoriesController < ApplicationController
   def create
     @drink_category = DrinkCategory.new(drink_category_params)
     if @drink_category.save
-      redirect_to admins_drink_categories_path, notice: "ドリンクカテゴリーを作成しました"
+      redirect_to admin_drink_categories_path, notice: "ドリンクカテゴリーを作成しました"
     else
       render :new
     end
@@ -25,7 +25,7 @@ class Admins::DrinkCategoriesController < ApplicationController
   def update
     @drink_category = DrinkCategory.find(params[:id])
     if @drink_category.update(drink_category_params)
-      redirect_to admins_drink_categories_path, notice: "ドリンクカテゴリーを更新しました"
+      redirect_to admin_drink_categories_path, notice: "ドリンクカテゴリーを更新しました"
     else
       render :edit
     end
@@ -34,7 +34,7 @@ class Admins::DrinkCategoriesController < ApplicationController
   def destroy
     @drink_category = DrinkCategory.find(params[:id])
     @drink_category.destroy
-    redirect_to admins_drink_categories_path, notice: "ドリンクカテゴリーを削除しました"
+    redirect_to admin_drink_categories_path, notice: "ドリンクカテゴリーを削除しました"
   end
 
   private

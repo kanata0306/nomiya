@@ -1,13 +1,28 @@
 <h1>企業詳細</h1>
 
-<h3>企業名</h3>
-<%= @company.company_name %>
-<h3>代表者名</h3>
-<%= @company.representative_name %>
-<h3>代表者メール</h3>
-<%= @company.email %>
-<h3>電話番号</h3>
-<%= @company.phone_number %>
-<h3>住所</h3>
-<%= @company.address %> <br >
-<%= link_to "編集", edit_companies_companies_path %>
+<table class="table">
+  <tbody>
+    <tr>
+      <th>企業名</th>
+      <td><%= @company.company_name %></td>
+    </tr>
+    <tr>
+      <th>代表者名</th>
+      <td><%= @company.representative_name %></td>
+    </tr>
+    <tr>
+      <th>代表者メール</th>
+      <td><%= @company.email %></td>
+    </tr>
+    <tr>
+      <th>電話番号</th>
+      <td><%= @company.phone_number %></td>
+    </tr>
+    <tr>
+      <th>住所</th>
+      <td><%= @company.address %></td>
+    </tr>
+  </tbody>
+</table>
+
+<%= link_to "編集", edit_companies_companies_path, class: "btn btn-warning" %>

@@ -1,0 +1,22 @@
+<h1>Admin::Comments#index</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>コメントID</th>
+      <th>コメント</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @comments.each do |comment| %>
+      <tr>
+        <td><%= comment.id %></td>
+        <td><%= comment.comment_content %></td>
+        <td><%= link_to "削除", admin_comment_path(comment), method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "戻る", admin_root_path, class: "btn btn-secondary" %>
