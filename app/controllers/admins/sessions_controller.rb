@@ -19,12 +19,12 @@ class Admins::SessionsController < Devise::SessionsController
   # end
   
   def after_sign_in_path_for(resource)
-    new_admins_drink_category_path
+    admin_root_path
   end
 
   
   def after_sign_up_path_for(resource)
-    new_admins_drink_category_path
+    admin_root_path
   end
 
   # protected

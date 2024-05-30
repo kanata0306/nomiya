@@ -33,8 +33,11 @@ class Admin::DrinkCategoriesController < ApplicationController
 
   def destroy
     @drink_category = DrinkCategory.find(params[:id])
-    @drink_category.destroy
-    redirect_to admin_drink_categories_path, notice: "ドリンクカテゴリーを削除しました"
+    if @drink_category.destroy
+      redirect_to admin_drink_categories_path, notice: "ドリンクカテゴリーを削除しました"
+    else
+      redirect_to admin_drink_categories_path, alert: "ドリンクが紐づいているため、ドリンクカテゴリーが削除できません。"
+    end
   end
 
   private

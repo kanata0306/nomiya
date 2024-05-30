@@ -1,24 +1,33 @@
-<h2>ドリンクカテゴリー一覧</h2>
+<div class="row mt-4">
+  <div class="col-md-8 offset-md-2 ">
+    <div class="card">
+      <div class="card-body">
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>カテゴリー名</th>
-      <th>編集</th>
-      <th>削除</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @drink_categories.each do |drink_category| %>
-      <tr>
-        <td><%= drink_category.name %></td>
-        <td><%= link_to "編集", edit_admin_drink_category_path(drink_category) %></td>
-        <td><%= link_to "削除", admin_drink_category_path(drink_category), method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<%= link_to "新規作成", new_admin_drink_category_path %>
-
-<%= link_to "戻る", admin_root_path, class: "btn btn-secondary" %>
+        <h2>ドリンクカテゴリー一覧</h2>
+        
+        <table class="table">
+          <thead>
+            <tr>
+              <th>カテゴリー名</th>
+              <th>編集</th>
+              <th>削除</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @drink_categories.each do |drink_category| %>
+              <tr>
+                <td><%= drink_category.name %></td>
+                <td><%= link_to "編集", edit_admin_drink_category_path(drink_category) %></td>
+                <td><%= link_to "削除", admin_drink_category_path(drink_category), method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="mt-4">
+      <%= link_to "新規作成", new_admin_drink_category_path, class: "btn btn-primary" %>
+      <%= link_to "戻る", admin_root_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>
