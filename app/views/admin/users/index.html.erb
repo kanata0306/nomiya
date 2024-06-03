@@ -1,0 +1,38 @@
+<h1 class="mt-4 mb-3">ユーザー管理画面</h1>
+
+<div>
+  <%= form_with url: admin_users_path, method: :get  do |f| %>
+    <div class="row">
+      <div class="col-sm-8 col-md-6 col-lg-4 mb-2">
+        <div class="d-flex">
+          <%= f.search_field :keyword, class: "form-control", placeholder: "キーワードで検索", value: params[:keyword] %>
+          <%= f.submit "検索", class: "btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ユーザーID</th>
+      <th>名前</th>
+      <th>email</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= link_to "削除", admin_user_path(user), method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="mt-4">
+  <%= link_to "戻る", admin_root_path, class: "btn btn-secondary" %>
+</div>

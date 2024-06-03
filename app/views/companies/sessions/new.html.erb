@@ -25,6 +25,7 @@
       </div>
     </div>
     <%= render "devise/shared/links" %>
-    <%= link_to "一般ユーザとしてログインする", new_user_session_path %>
+    <%= link_to "一般ユーザとしてログインする", new_user_session_path %><br >
+    <%= link_to 'ゲストログイン', companies_guest_sign_in_path, method: :post, class: "btn btn-secondary " %>
   </div>
 </div>

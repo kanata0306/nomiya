@@ -17,6 +17,12 @@ class Companies::SessionsController < Devise::SessionsController
   # def destroy
   #   super
   # end
+  
+  def guest_sign_in
+    user = Company.guest
+    sign_in user
+    redirect_to companies_posts_path, notice: 'ゲストユーザーとしてログインしました。'
+  end
 
   # protected
 
