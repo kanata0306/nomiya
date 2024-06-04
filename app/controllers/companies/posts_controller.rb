@@ -84,6 +84,8 @@ class Companies::PostsController < ApplicationController
       :store_description,
       :popular_courses_and_prices,
       :store_image,
+      :address,
+      :phone,
       business_hours_attributes: [:id, :open_time, :close_time, :is_closed, :week_day ],
       drinks_attributes: [:id, :drink_category_id, :name, :price, :_destroy],
     )

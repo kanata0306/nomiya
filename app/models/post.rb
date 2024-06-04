@@ -6,6 +6,10 @@ class Post < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_one_attached :store_image
   
+  validates :store_name, presence: true, length: { maximum: 50 }
+  validates :address, presence: true, length: { maximum: 100 }
+  validates :phone, presence: true, length: { maximum: 12 }
+  
   accepts_nested_attributes_for :drinks, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :business_hours, reject_if: :all_blank, allow_destroy: true
 

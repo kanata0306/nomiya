@@ -8,6 +8,16 @@
     <%= f.label :store_description, "店舗紹介" %>
     <%= f.text_area :store_description, class: "form-control", rows: 5 %>
   </div>
+  
+  <div class="forn-group">
+    <%= f.label :address, "所在地" %>
+    <%= f.text_field :address, class: "form-control" %>
+  </div>
+  
+  <div class="forn-group">
+    <%= f.label :phone, "電話番号" %>
+    <%= f.text_field :phone, class: "form-control" %>
+  </div>
 
   <div class="form-group">
     <label>営業時間</label>
