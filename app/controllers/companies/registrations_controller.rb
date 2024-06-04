@@ -77,7 +77,7 @@ class Companies::RegistrationsController < Devise::RegistrationsController
   def after_sign_up_for(resource)
     company_root_path
   end
-
+  
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:company_name, :representative_name, :phone_number, :address])
     devise_parameter_sanitizer.permit(:update, keys: [:company_name, :representative_name, :phone_number, :address])

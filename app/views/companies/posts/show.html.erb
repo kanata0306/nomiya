@@ -99,7 +99,7 @@
   </div>
   <div class="col-md-8 mb-3">
     <h2>コメント一覧</h2>
-    
+
     <table class="table">
       <tbody>
         <% @comments.each do |comment| %>
@@ -119,7 +119,7 @@
   </div>
 </div>
 
-<div class="d-flex mt-4">
+<div class="d-flex mt-4 mb-4">
   <%= link_to '一覧に戻る', companies_posts_path, class: "btn btn-secondary" %>
   <% if @post.company == current_company %>
     <%= link_to '投稿を削除', companies_post_path(@post), method: :delete, class: "btn btn-danger", data: { confirm: '本当に削除しますか？' } %>
