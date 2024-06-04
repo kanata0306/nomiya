@@ -1,4 +1,6 @@
 class Admin::CompaniesController < ApplicationController
+  before_action :authenticate_admin!
+  
   def index
     @companies = Company.all
     @companies = @companies.where('company_name LIKE ?', "%#{params[:keyword]}%") if params[:keyword].present?
