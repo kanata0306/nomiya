@@ -48,7 +48,7 @@
     <div class="container">
       <%= render 'layouts/flash_messages' %>
       <%= yield %>
-      <% if true #Rails.env.development? %>
+      <% if Rails.env.development? %>
         <br>
         admin: <%= current_admin.inspect %><br>
         company: <%= current_company.inspect %><br>
