@@ -69,15 +69,17 @@
       </thead>
       <tbody>
         <% drinks_by_category.each do |category, drinks| %>
-          <ul>
-            <% drinks.each_with_index do |drink, i| %>
-              <tr>
-                <td><%= category if i == 0 %></td>
-                <td><%= drink.name %></td>
-                <td><%= drink.price.to_i %>円</td>
-              </tr>
-            <% end %>
-          </ul>
+          <% drinks.each_with_index do |drink, i| %>
+            <tr>
+              <% if i == 0 %>
+                <td rowspan=<%= drinks.size %>>
+                  <%= category %>
+                </td>
+              <% end %>
+              <td><%= drink.name %></td>
+              <td><%= drink.price.to_i %>円</td>
+            </tr>
+          <% end %>
         <% end %>
       </tbody>
     </table>
