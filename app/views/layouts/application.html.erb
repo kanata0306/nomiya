@@ -48,6 +48,12 @@
     <div class="container">
       <%= render 'layouts/flash_messages' %>
       <%= yield %>
-
+      <% if Rails.env.development? %>
+        <br>
+        admin: <%= current_admin.inspect %><br>
+        company: <%= current_company.inspect %><br>
+        user: <%= current_user.inspect %><br>
+      <% end %>
+    </div>
   </body>
 </html>
