@@ -1,4 +1,7 @@
 class Post < ApplicationRecord
+  geocoded_by :address
+  after_validation :geocode
+  
   belongs_to :company
   has_many :drinks, dependent: :destroy
   has_many :business_hours, dependent: :destroy

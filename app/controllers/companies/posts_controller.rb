@@ -2,7 +2,7 @@ class Companies::PostsController < ApplicationController
   before_action :authenticate_company!, only: [:new, :create, :edit, :update, :destroy]
   #before_action :authenticate_user!, only: [:show]
   before_action :user_check, only: [:index]
-  
+
   def new
     @post = Post.new
     @post.drinks.build
@@ -33,6 +33,7 @@ class Companies::PostsController < ApplicationController
   end
 
   def index
+    @posts = Post.all
     if current_company
       @posts = current_company.posts.includes(:business_hours, :drinks)
     else
@@ -46,6 +47,11 @@ class Companies::PostsController < ApplicationController
     if params[:business_hour].present?
       @posts =  @posts.where('business_hours.week_day': "#{params[:business_hour]}", 'business_hours.is_closed': false).references(:business_hours)
     end
+    if params[:latitude].present? && params[:longitude].present?
+      current_point = Post.new(latitude: params[:latitude], longitude: params[:longitude])
+      @posts = current_point.nearbys(params[:distance].to_i, units: :km)
+    end
+    @posts = @posts.page(params[:page]).per(10)
   end
 
   def show
@@ -65,19 +71,19 @@ class Companies::PostsController < ApplicationController
     @post.destroy
     redirect_to companies_posts_path, notice: "投稿を削除しました"
   end
-  
+
   private
-  
+
   def authenticate_company!
     unless current_company
       redirect_to root_path, alert: "ログインしていません"
     end
   end
-  
+
   def user_check
     redirect_to root_url if current_user
   end
-  
+
   def post_params
     params.require(:post).permit(
       :store_name,

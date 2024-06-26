@@ -1,4 +1,8 @@
 class DrinkCategory < ApplicationRecord
+  validates :name, presence: true, uniqueness: true
+
+
+
   has_many :drinks
 
   before_update :drinks_check

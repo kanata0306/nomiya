@@ -14,3 +14,139 @@
   <%= link_to "new_post", new_companies_post_path, class: "btn btn-primary" %>
 <% else %>
 <% end %>
+
+<div class="mt-4 d-flex justify-content-center">
+  <%= paginate @posts %>
+</div>
+
+<h2>Google map</h2>
+
+<input id="address" type="textbox" value="">
+<input type="button" value="地図を検索" onclick="codeAddress()">
+<button type="button" class="get-current-position-btn">現在地を取得する</button>
+
+<div id="display">緯度経度が表示されるよ！</div>
+
+<%= form_with url: "#", method: :get do |f| %>
+  <%= f.hidden_field :latitude, id: "current_latitude", value: params[:latitude] %>
+  <%= f.hidden_field :longitude, id: "current_longitude", value: params[:longitude] %>
+  半径<%= f.select :distance, [1, 3, 5, 10] %>km以内で探す
+  <%= f.submit "探す" %>
+<% end %>
+
+<div id='map'></div>
+
+<style>
+    #map {
+        height: 400px;
+        width: 400px;
+    }
+</style>
+
+<script>
+    let map
+
+    const display = document.getElementById('display')
+
+    // mapの表示関数
+    function initMap() {
+        geocoder = new google.maps.Geocoder()
+
+        // mapの初期位置, 縮尺を定義
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {
+                lat: 35.6458437,
+                lng: 139.7046171
+            },
+            zoom: 12,
+        });
+
+        // mapsテーブルにあるそれぞれのレコードをmap上に表示
+        <% @posts.each do |m| %>
+            (function(){
+            var contentString = "住所：<%= m.address %>";
+
+            // マーカーを立てる
+            var marker = new google.maps.Marker({
+                position:{lat: <%= m.latitude %>, lng: <%= m.longitude %>},
+                map: map,
+                title: contentString
+            });
+
+            // 情報ウィンドウ(吹き出し)の定義
+            // 投稿の詳細ページへのリンクも
+            var infowindow = new google.maps.InfoWindow({
+            position: {lat: <%= m.latitude %>, lng: <%= m.longitude %>},
+            content: "<a href='<%= users_post_url(m.id) %>' target='_blank'><%= m.address %></a>"
+            });
+
+            // クリックしたときに情報ウィンドウを表示
+            marker.addListener('click', function() {
+            infowindow.open(map, marker);
+            });
+
+            })();
+        <% end %>
+    }
+
+    let geocoder
+
+    // 地図検索関数
+    function codeAddress() {
+        let inputAddress = document.getElementById('address').value;
+
+        geocoder.geocode({
+            'address': inputAddress
+        }, function (results, status) {
+            if (status == 'OK') {
+                map.setCenter(results[0].geometry.location);
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
+
+            display.textContent = "検索結果：" + results[ 0 ].geometry.location
+            document.getElementById('current_latitude').value = (results[ 0 ].geometry.location.lat())
+            document.getElementById('current_longitude').value = (results[ 0 ].geometry.location.lng())
+            } else {
+                alert('該当する結果がありませんでした：' + status);
+            }
+        });
+    }
+</script>
+
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap"
+    async defer>
+</script>
+
+
+
+
+<script>
+ // 現在地の取得と送信
+
+ // 成功時の処理
+ function success(pos){
+   const lat = pos.coords.latitude;
+   const lng = pos.coords.longitude;
+   document.getElementById('current_latitude').value = lat
+   document.getElementById('current_longitude').value = lng
+   display.textContent = "検索結果：" + "(" + lat + ", " + lng + ")"
+   map.setCenter({lat: lat, lng: lng});
+    var marker = new google.maps.Marker({
+        map: map,
+        position: {lat: lat, lng: lng}
+    });
+ }
+ // 失敗時の処理
+ function fail(pos){
+   alert('位置情報の取得に失敗しました。');
+ }
+
+ $(function(){
+   $('.get-current-position-btn').click(function(){
+   const currentPosition = navigator.geolocation.getCurrentPosition(success,fail);
+   });
+ });
+ </script>

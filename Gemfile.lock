@@ -81,6 +81,7 @@ GEM
     cocoon (1.2.15)
     concurrent-ruby (1.2.3)
     crass (1.0.6)
+    csv (3.3.0)
     date (3.3.4)
     devise (4.9.3)
       bcrypt (~> 3.0)
@@ -96,6 +97,9 @@ GEM
       activesupport (>= 3.0.0)
     erubi (1.12.0)
     ffi (1.16.3)
+    geocoder (1.8.3)
+      base64 (>= 0.1.0)
+      csv (>= 3.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.4)
@@ -106,6 +110,18 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    kaminari (1.2.2)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.2.2)
+      kaminari-activerecord (= 1.2.2)
+      kaminari-core (= 1.2.2)
+    kaminari-actionview (1.2.2)
+      actionview
+      kaminari-core (= 1.2.2)
+    kaminari-activerecord (1.2.2)
+      activerecord
+      kaminari-core (= 1.2.2)
+    kaminari-core (1.2.2)
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -254,8 +270,10 @@ DEPENDENCIES
   devise
   dotenv-rails
   enum_help
+  geocoder
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
+  kaminari
   listen (~> 3.3)
   mysql2
   net-imap

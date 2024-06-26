@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_04_121606) do
+ActiveRecord::Schema.define(version: 2024_06_19_133656) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -133,6 +133,8 @@ ActiveRecord::Schema.define(version: 2024_06_04_121606) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "address"
     t.string "phone"
+    t.float "latitude"
+    t.float "longitude"
     t.index ["company_id"], name: "index_posts_on_company_id"
   end
 
