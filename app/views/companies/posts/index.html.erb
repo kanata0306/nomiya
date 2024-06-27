@@ -27,10 +27,13 @@
 </div>
 
 
-<script
-    src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap"
-    async defer>
-</script>
+
+<style>
+    #map {
+        height: 400px;
+        width: 100%;
+    }
+</style>
 
 <script>
     let map
@@ -102,30 +105,38 @@
             }
         });
     }
-    
-     // 現在地の取得と送信
-
-   // 成功時の処理
-   function success(pos){
-     const lat = pos.coords.latitude;
-     const lng = pos.coords.longitude;
-     document.getElementById('current_latitude').value = lat
-     document.getElementById('current_longitude').value = lng
-     //display.textContent = "検索結果：" + "(" + lat + ", " + lng + ")"
-     map.setCenter({lat: lat, lng: lng});
-     $('#distanceField').show();
-     // var marker = new google.maps.Marker({
-     //   map: map,
-     //    position: {lat: lat, lng: lng}
-     // });
-   }
-   // 失敗時の処理
-   function fail(pos){
-     $('#distanceField').hide();
-     alert('位置情報の取得に失敗しました。');
-   }
-  
-   window.onload = function(){
-     const currentPosition = navigator.geolocation.getCurrentPosition(success, fail);
-   };
 </script>
+
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap"
+    async defer>
+</script>
+
+
+<script>
+ // 現在地の取得と送信
+
+ // 成功時の処理
+ function success(pos){
+   const lat = pos.coords.latitude;
+   const lng = pos.coords.longitude;
+   document.getElementById('current_latitude').value = lat
+   document.getElementById('current_longitude').value = lng
+   //display.textContent = "検索結果：" + "(" + lat + ", " + lng + ")"
+   map.setCenter({lat: lat, lng: lng});
+   $('#distanceField').show();
+   // var marker = new google.maps.Marker({
+   //   map: map,
+   //    position: {lat: lat, lng: lng}
+   // });
+ }
+ // 失敗時の処理
+ function fail(pos){
+   $('#distanceField').hide();
+   alert('位置情報の取得に失敗しました。');
+ }
+
+ window.onload = function(){
+   const currentPosition = navigator.geolocation.getCurrentPosition(success, fail);
+ };
+ </script>
