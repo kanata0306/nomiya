@@ -4,9 +4,16 @@
     <label>キーワードや営業日からお店を検索することができます。</label><br>
     キーワード検索:<%= f.search_field :keyword, value: params[:keyword] %>
     営業日:<%= f.collection_select :business_hour, BusinessHour.week_days_i18n, :first, :last, { include_blank: "--ALL--", selected: params[:business_hour] }, {  } %>
+    <%= f.hidden_field :latitude, id: "current_latitude", value: params[:latitude] %>
+    <%= f.hidden_field :longitude, id: "current_longitude", value: params[:longitude] %>
+    <span id="distanceField">
+        半径:<%= f.select :distance, [1, 3, 5, 10], { include_blank: "--", selected: params[:distance] }, {} %>km以内で探す
+    </span>
     <%= f.submit "検索する"%>
   <% end %>
 </div>
+
+<div id='map' class="my-4"></div>
 
 <%= render "companies/posts/posts", posts: @posts %>
 
@@ -18,30 +25,6 @@
 <div class="mt-4 d-flex justify-content-center">
   <%= paginate @posts %>
 </div>
-
-<h2>Google map</h2>
-
-<input id="address" type="textbox" value="">
-<input type="button" value="地図を検索" onclick="codeAddress()">
-<button type="button" class="get-current-position-btn">現在地を取得する</button>
-
-<div id="display">緯度経度が表示されるよ！</div>
-
-<%= form_with url: "#", method: :get do |f| %>
-  <%= f.hidden_field :latitude, id: "current_latitude", value: params[:latitude] %>
-  <%= f.hidden_field :longitude, id: "current_longitude", value: params[:longitude] %>
-  半径<%= f.select :distance, [1, 3, 5, 10] %>km以内で探す
-  <%= f.submit "探す" %>
-<% end %>
-
-<div id='map'></div>
-
-<style>
-    #map {
-        height: 400px;
-        width: 400px;
-    }
-</style>
 
 <script>
     let map
@@ -113,40 +96,35 @@
             }
         });
     }
+    
+     // 現在地の取得と送信
+
+   // 成功時の処理
+   function success(pos){
+     const lat = pos.coords.latitude;
+     const lng = pos.coords.longitude;
+     document.getElementById('current_latitude').value = lat
+     document.getElementById('current_longitude').value = lng
+     //display.textContent = "検索結果：" + "(" + lat + ", " + lng + ")"
+     map.setCenter({lat: lat, lng: lng});
+     $('#distanceField').show();
+     // var marker = new google.maps.Marker({
+     //   map: map,
+     //    position: {lat: lat, lng: lng}
+     // });
+   }
+   // 失敗時の処理
+   function fail(pos){
+     $('#distanceField').hide();
+     alert('位置情報の取得に失敗しました。');
+   }
+  
+   window.onload = function(){
+     const currentPosition = navigator.geolocation.getCurrentPosition(success, fail);
+   };
 </script>
 
 <script
     src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap"
     async defer>
 </script>
-
-
-
-
-<script>
- // 現在地の取得と送信
-
- // 成功時の処理
- function success(pos){
-   const lat = pos.coords.latitude;
-   const lng = pos.coords.longitude;
-   document.getElementById('current_latitude').value = lat
-   document.getElementById('current_longitude').value = lng
-   display.textContent = "検索結果：" + "(" + lat + ", " + lng + ")"
-   map.setCenter({lat: lat, lng: lng});
-    var marker = new google.maps.Marker({
-        map: map,
-        position: {lat: lat, lng: lng}
-    });
- }
- // 失敗時の処理
- function fail(pos){
-   alert('位置情報の取得に失敗しました。');
- }
-
- $(function(){
-   $('.get-current-position-btn').click(function(){
-   const currentPosition = navigator.geolocation.getCurrentPosition(success,fail);
-   });
- });
- </script>

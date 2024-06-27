@@ -7,8 +7,8 @@ class Admin::UsersController < ApplicationController
   end
   
   def destroy
-    @company = Company.find_by_id(params[:id])
-    @company.destroy if @company
+    @user = User.find_by_id(params[:id])
+    @user.destroy if @user
     flash[:notice] = "削除しました。"
     redirect_to admin_users_path
   end
