@@ -26,6 +26,12 @@
   <%= paginate @posts %>
 </div>
 
+
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap"
+    async defer>
+</script>
+
 <script>
     let map
 
@@ -122,9 +128,4 @@
    window.onload = function(){
      const currentPosition = navigator.geolocation.getCurrentPosition(success, fail);
    };
-</script>
-
-<script
-    src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap"
-    async defer>
 </script>
