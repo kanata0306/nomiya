@@ -13,7 +13,7 @@ class HomesController < ApplicationController
       end
       if params[:distance].present?
         current_point = Post.new(latitude: params[:latitude], longitude: params[:longitude])
-        @posts = current_point.nearbys(params[:distance].to_i, units: :km)
+        @posts = current_point.nearbys(params[:distance].to_i, units: :km) || []
       end
       @posts = @posts.page(params[:page])
       render 'companies/posts/index'
