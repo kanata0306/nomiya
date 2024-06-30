@@ -74,8 +74,8 @@ class Companies::RegistrationsController < Devise::RegistrationsController
     company_session_path(resource)
   end
 
-  def after_sign_up_for(resource)
-    company_root_path
+  def after_sign_up_path_for(resource)
+    companies_posts_path
   end
   
   def configure_permitted_parameters
