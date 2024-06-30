@@ -2,7 +2,7 @@ class Company < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable,
+         :recoverable, :rememberable, :validatable,
          authentication_keys: [:email]
 
   validates :company_name, :email, :representative_name, :phone_number, :address, presence: true
